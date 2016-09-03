@@ -17,6 +17,16 @@ def resetGroup():
 	for i in list(groupDict):
 		groupDict.pop(i)
 
+	for elementIndex in range(1,len(paths)+1):
+		paths.pop()
+	for elementIndex in range(1,len(completePaths)+1):
+		completePaths.pop()
+	for elementIndex in range(1,len(lengthAnomalies)+1):
+		lengthAnomalies.pop()
+	for elementIndex in range(1,len(prematurePaths)+1):
+		prematurePaths.pop()
+
+
 def isPowerOfTwo(num):
 	return bin(num).count('1') == 1
 
@@ -117,12 +127,6 @@ def initializeGroup(order):
 	groupDictionarySetup.groupGenerate(n, myGroup)
 
 	makeMultiplicationTable(n)
-
-	paths = []
-	completePaths = []
-	lengthAnomalies = []
-	prematurePaths = []
-
 
 if __name__ == "__main__":
 	order = int(input('2n = ? '))
