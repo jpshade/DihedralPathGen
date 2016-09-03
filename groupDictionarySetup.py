@@ -20,20 +20,47 @@ def groupGenerate():
 		myGroup.append('r'+str(i)+'s')
 
 
+def rrChange(matchedSubstring):
+	numLengthCheck = re.compile('[0-9]+')
+
+	exponents = numLengthCheck.findall(matchedSubstring)
+	newExponent = 0
+
+	for num in exponents:
+		newExponent = newExponent + int(num)
+
+	return newExponent
+
+
+def srChange(matchedSubstring):
+	numLengthCheck = re.compile('[0-9]+')
+
+	exponent = numLengthCheck.findall(matchedSubstring)
+
+	return int(exponent[0])*(n-1)
+
+
+def rNChange(matchedSubstring):
+	numLengthCheck = re.compile('[0-9]+')
+
+	exponent = numLengthCheck.findall(matchedSubstring)
+
+	return int(exponent[0])-n
+
 
 def multiply(firstElement, secondElement):
 
 	#Regex for determining if two r values next to each other
 
-	rrCheck = re.compile('r[0-9]r[0-9]')
+	rrCheck = re.compile('r[0-9]+r[0-9]+')
 
 	#regex for determining if r comes after s
 
-	srCheck = re.compile('sr[0-9]')
+	srCheck = re.compile('sr[0-9]+')
 
 	#regex for checking if an r exponent is greater than n
 
-	rNCheck = re.compile('r[' + str(n+1) + '-9]')
+	rNCheck = re.compile('[0-9]+')
 
 	totalString = firstElement + secondElement
 
@@ -46,69 +73,55 @@ def multiply(firstElement, secondElement):
 
 		changesMade = False
 
-		#~~~~~~~~~~~~~~~~~~~~~~~
-
-		#Check identities
-
-		if ('ss' in totalString) or ('r'+str(n) in totalString):
-			totalString = totalString.replace('ss', '').replace('r'+str(n), '')
-			changesMade = True
-
-
-		#Check r4
-
-		rNMatch = rNCheck.search(totalString)
-
-		while rNMatch:
-			newExponent = int(totalString[rNMatch.start() + 1]) - n
-			totalString = totalString[:rNMatch.start() + 1] + str(newExponent) + totalString[rNMatch.end():]
-			changesMade = True
-			rNMatch = rNCheck.search(totalString)
-
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-		#replace sr with r3s
+		#replace sr with r(n-1)
 
 		srMatch = srCheck.search(totalString)
 
 		while srMatch:
-			newExponent = int(totalString[srMatch.end()-1]) * (n-1)
-			totalString = totalString[:srMatch.start()] + 'r' + str(newExponent) + 's' + totalString[srMatch.end():]
+			totalString = totalString[:srMatch.start()] + 'r' + str(srChange(totalString[srMatch.start():srMatch.end()])) + 's' + totalString[srMatch.end():]
 			changesMade = True
 			srMatch = srCheck.search(totalString)
-			
+
 		#~~~~~~~~~~~~~~~~~~~~~~~
 
-		#Check identities
-
-		if ('ss' in totalString) or (('r'+str(n)) in totalString):
-			totalString = totalString.replace('ss', '').replace('r'+str(n), '')
-			changesMade = True
-
-		#Check r4
-
-		rNMatch = rNCheck.search(totalString)
-
-		while rNMatch:
-			newExponent = int(totalString[rNMatch.start() + 1]) - n
-			totalString = totalString[:rNMatch.start() + 1] + str(newExponent) + totalString[rNMatch.end():]
-			changesMade = True
-			rNMatch = rNCheck.search(totalString)
-
-
-		#~~~~~~~~~~~~~~~~~~~~~
 		#if r values side by side, add exponents
 
 		rrMatch = rrCheck.search(totalString)
 
 		while rrMatch:
-			newExponent = int(totalString[rrMatch.start() + 1]) + int(totalString[rrMatch.start() + 3])
+			newExponent = rrChange(totalString[rrMatch.start():rrMatch.end()])
 			totalString = totalString[:rrMatch.start()] + 'r' + str(newExponent) + totalString[rrMatch.end():]
 			changesMade = True
 			rrMatch = rrCheck.search(totalString)
 
-		#Check exit condition
+		#~~~~~~~~~~~~~~~~~~~~~~~~`
+		#Check r4
 
+		rNMatch = rNCheck.findall(totalString)
+
+		for exponent in rNMatch:
+			if int(exponent) >= n:
+				newExponent = int(exponent) % n
+				totalString = totalString.replace(exponent, str(newExponent))
+
+		'''
+		while rNMatch:
+
+
+			newExponent = rNChange(totalString[rNMatch.start():rNMatch.end()])
+			totalString = totalString[:rNMatch.start() + 1] + str(newExponent) + totalString[rNMatch.end():]
+			changesMade = True
+			rNMatch = rNCheck.search(totalString)
+		'''
+
+		if ('ss' in totalString) or ('r0' in totalString):
+			totalString = totalString.replace('ss', '').replace('r0', '')
+			changesMade = True
+
+		#Check exit condition
+		
 		if not changesMade:
 			break
 
@@ -116,6 +129,9 @@ def multiply(firstElement, secondElement):
 		totalString = 'e'
 
 	return totalString
+
+
+
 
 
 
