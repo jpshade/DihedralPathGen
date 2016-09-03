@@ -139,7 +139,7 @@ def initialize():
 
 	groupGenerate()
 
-	with open('D' + str(order) + 'multiply.txt', 'w') as f:
+	with open('D' + str(order) + 'MultiplicationTable.txt', 'w') as f:
 		f.write("Group: [ ")
 
 		for element in myGroup:
