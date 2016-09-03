@@ -139,14 +139,14 @@ def initialize():
 
 	groupGenerate()
 
-	with open('D' + str(order) + 'MultiplicationTable.txt', 'w') as f:
-		f.write("Group: [ ")
+	with open('D{}MultiplicationTable.py'.format(str(order)), 'w') as f:
+		f.write('D{}: ['.format(str(order)))
 
 		for element in myGroup:
 			f.write(element + ' ')
 		f.write(']\n')
 
-		f.write("groupDict = {")
+		f.write("D{}Dict = {{\n".format(str(order)))
 		for firstElement in myGroup:
 			for secondElement in myGroup:
 				newElement = multiply(firstElement,secondElement)

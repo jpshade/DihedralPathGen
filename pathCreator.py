@@ -39,7 +39,7 @@ def generatePath(firstElement, secondElement):
 
 	pathString = pathString[:-4]
 
-	fullString =  '(' + firstElement + ' , ' + secondElement + ') : ' +  str(counter) + ' steps : ' + pathString
+	fullString =  '{:<15}: {:<10}: {}'.format('(' + firstElement + ' , ' + secondElement + ')', str(counter) + ' steps', pathString)
 
 	pathDict = {'elements' : (firstElement, secondElement), 'pathList' : pathList, 'counter' : counter, 'fullString': fullString}
 
