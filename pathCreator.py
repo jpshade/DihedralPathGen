@@ -1,25 +1,26 @@
 import os
-from groupDictionarySetup import *
+import groupDictionarySetup
 
-if not os.path.exists('D' + str(order)):
-    os.makedirs('D' + str(order))
+workingDir = os.getcwd()
 
-os.chdir('.\\D' + str(order))
-
-initialize()
+myGroup = ['e']
+groupDict = {}
 
 paths = []
-
 completePaths = []
-
 lengthAnomalies = []
-
 prematurePaths = []
+
+def resetGroup():
+	for elementIndex in range(1,len(myGroup)):
+		myGroup.pop()
+	for i in list(groupDict):
+		groupDict.pop(i)
 
 def isPowerOfTwo(num):
 	return bin(num).count('1') == 1
 
-def generatePath(firstElement, secondElement):
+def generatePath(firstElement, secondElement, order):
 	
 	pathList = ['e']
 	counter = 0
@@ -60,26 +61,69 @@ def generatePath(firstElement, secondElement):
 
 
 
+def writeResults(order):
+	
+	initializeGroup(order)
 
-with open('D' + str(order) + 'Results.txt', 'w') as f:
-	f.write('Results:\n\n')
+	with open('D' + str(order) + 'Results.txt', 'w') as f:
+		f.write('Results:\n\n')
 
-	for firstElement in myGroup:
-		for secondElement in myGroup:
-			f.write(generatePath(firstElement,secondElement)['fullString'] + '\n')
+		for firstElement in myGroup:
+			for secondElement in myGroup:
+				f.write(generatePath(firstElement,secondElement,order)['fullString'] + '\n')
 
-with open('D' + str(order) + 'SignificantPaths.txt', 'w') as f:
-	f.write("Complete Paths: Total {}\n\n".format(str(len(completePaths))))
+	with open('D' + str(order) + 'SignificantPaths.txt', 'w') as f:
+		f.write("Complete Paths: Total {}\n\n".format(str(len(completePaths))))
 
-	for path in completePaths:
-		f.write(path['fullString']+'\n')
+		for path in completePaths:
+			f.write(path['fullString']+'\n')
 
-	f.write('\n\nLength Anomalies: Total {}\n\n'.format(str(len(lengthAnomalies))))
+		f.write('\n\nLength Anomalies: Total {}\n\n'.format(str(len(lengthAnomalies))))
 
-	for path in lengthAnomalies:
-		f.write(path['fullString'] + '\n')
+		for path in lengthAnomalies:
+			f.write(path['fullString'] + '\n')
 
-	f.write('\n\nPremature Paths: Total {}\n\n'.format(str(len(prematurePaths))))
+		f.write('\n\nPremature Paths: Total {}\n\n'.format(str(len(prematurePaths))))
 
-	for path in prematurePaths:
-		f.write(path['fullString']+'\n')
+		for path in prematurePaths:
+			f.write(path['fullString']+'\n')
+
+
+def makeMultiplicationTable(n):
+	with open('D{}MultiplicationTable.py'.format(str(2*n)), 'w') as f:
+		f.write('D{}: ['.format(str(2*n)))
+		for element in myGroup:
+			f.write(element + ' ')
+		f.write(']\n')
+		f.write("D{}Dict = {{\n".format(str(2*n)))
+		for firstElement in myGroup:
+			for secondElement in myGroup:
+				newElement = groupDictionarySetup.multiply(firstElement,secondElement,n)
+				f.write('\t(\'' + firstElement + '\',\'' + secondElement + '\') : \''+ newElement + '\'\n' )
+				groupDict[(firstElement, secondElement)] = newElement
+		f.write("}")
+
+
+def initializeGroup(order):
+	resetGroup()
+	
+	n = int(order/2)
+	if not os.path.exists(workingDir + '\\D' + str(order)):
+	    os.makedirs(workingDir + '\\D' + str(order))
+
+	os.chdir(workingDir + '\\D' + str(order))
+
+	#initialize(n, myGroup, groupDict)
+	groupDictionarySetup.groupGenerate(n, myGroup)
+
+	makeMultiplicationTable(n)
+
+	paths = []
+	completePaths = []
+	lengthAnomalies = []
+	prematurePaths = []
+
+
+if __name__ == "__main__":
+	order = int(input('2n = ? '))
+	writeResults(order)

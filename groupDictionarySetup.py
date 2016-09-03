@@ -1,16 +1,6 @@
 import re
 
-#myGroup = ['e', 'r1', 'r2', 'r3', 's', 'r1s', 'r2s', 'r3s']
-
-myGroup = ['e']
-groupDict = {}
-
-order = int(input("2n = ? "))
-
-
-n = int(order/2)
-
-def groupGenerate():
+def groupGenerate(n, myGroup):
 	for i in range(1,n):
 		myGroup.append('r'+ str(i))
 
@@ -20,7 +10,7 @@ def groupGenerate():
 		myGroup.append('r'+str(i)+'s')
 
 
-def rrChange(matchedSubstring):
+def rrChange(matchedSubstring,n):
 	numLengthCheck = re.compile('[0-9]+')
 
 	exponents = numLengthCheck.findall(matchedSubstring)
@@ -32,7 +22,7 @@ def rrChange(matchedSubstring):
 	return newExponent
 
 
-def srChange(matchedSubstring):
+def srChange(matchedSubstring,n):
 	numLengthCheck = re.compile('[0-9]+')
 
 	exponent = numLengthCheck.findall(matchedSubstring)
@@ -40,15 +30,7 @@ def srChange(matchedSubstring):
 	return int(exponent[0])*(n-1)
 
 
-def rNChange(matchedSubstring):
-	numLengthCheck = re.compile('[0-9]+')
-
-	exponent = numLengthCheck.findall(matchedSubstring)
-
-	return int(exponent[0])-n
-
-
-def multiply(firstElement, secondElement):
+def multiply(firstElement, secondElement, n):
 
 	#Regex for determining if two r values next to each other
 
@@ -80,7 +62,7 @@ def multiply(firstElement, secondElement):
 		srMatch = srCheck.search(totalString)
 
 		while srMatch:
-			totalString = totalString[:srMatch.start()] + 'r' + str(srChange(totalString[srMatch.start():srMatch.end()])) + 's' + totalString[srMatch.end():]
+			totalString = totalString[:srMatch.start()] + 'r' + str(srChange(totalString[srMatch.start():srMatch.end()],n)) + 's' + totalString[srMatch.end():]
 			changesMade = True
 			srMatch = srCheck.search(totalString)
 
@@ -91,7 +73,7 @@ def multiply(firstElement, secondElement):
 		rrMatch = rrCheck.search(totalString)
 
 		while rrMatch:
-			newExponent = rrChange(totalString[rrMatch.start():rrMatch.end()])
+			newExponent = rrChange(totalString[rrMatch.start():rrMatch.end()],n)
 			totalString = totalString[:rrMatch.start()] + 'r' + str(newExponent) + totalString[rrMatch.end():]
 			changesMade = True
 			rrMatch = rrCheck.search(totalString)
@@ -106,15 +88,6 @@ def multiply(firstElement, secondElement):
 				newExponent = int(exponent) % n
 				totalString = totalString.replace(exponent, str(newExponent))
 
-		'''
-		while rNMatch:
-
-
-			newExponent = rNChange(totalString[rNMatch.start():rNMatch.end()])
-			totalString = totalString[:rNMatch.start() + 1] + str(newExponent) + totalString[rNMatch.end():]
-			changesMade = True
-			rNMatch = rNCheck.search(totalString)
-		'''
 
 		if ('ss' in totalString) or ('r0' in totalString):
 			totalString = totalString.replace('ss', '').replace('r0', '')
@@ -129,30 +102,3 @@ def multiply(firstElement, secondElement):
 		totalString = 'e'
 
 	return totalString
-
-
-
-
-
-
-def initialize():
-
-	groupGenerate()
-
-	with open('D{}MultiplicationTable.py'.format(str(order)), 'w') as f:
-		f.write('D{}: ['.format(str(order)))
-
-		for element in myGroup:
-			f.write(element + ' ')
-		f.write(']\n')
-
-		f.write("D{}Dict = {{\n".format(str(order)))
-		for firstElement in myGroup:
-			for secondElement in myGroup:
-				newElement = multiply(firstElement,secondElement)
-				f.write('\t(\'' + firstElement + '\',\'' + secondElement + '\') : \''+ newElement + '\'\n' )
-				groupDict[(firstElement, secondElement)] = newElement
-
-		f.write("}")
-
-
