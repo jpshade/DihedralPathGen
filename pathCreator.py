@@ -10,6 +10,8 @@ initialize()
 
 paths = []
 
+completePaths = []
+
 lengthAnomalies = []
 
 prematurePaths = []
@@ -43,6 +45,9 @@ def generatePath(firstElement, secondElement):
 
 	pathDict = {'elements' : (firstElement, secondElement), 'pathList' : pathList, 'counter' : counter, 'fullString': fullString}
 
+	if pathDict['counter'] == order:
+		completePaths.append(pathDict)
+
 	if (not isPowerOfTwo(pathDict['counter']) and (order % pathDict['counter'])):
 		lengthAnomalies.append(pathDict)
 
@@ -63,13 +68,18 @@ with open('D' + str(order) + 'Results.txt', 'w') as f:
 		for secondElement in myGroup:
 			f.write(generatePath(firstElement,secondElement)['fullString'] + '\n')
 
-with open('D' + str(order) + 'Anomalies.txt', 'w') as f:
-	f.write('Length Anomalies:\n\n')
+with open('D' + str(order) + 'SignificantPaths.txt', 'w') as f:
+	f.write("Complete Paths: Total {}\n\n".format(str(len(completePaths))))
+
+	for path in completePaths:
+		f.write(path['fullString']+'\n')
+
+	f.write('\n\nLength Anomalies: Total {}\n\n'.format(str(len(lengthAnomalies))))
 
 	for path in lengthAnomalies:
 		f.write(path['fullString'] + '\n')
 
-	f.write('\n\nPremature Paths\n\n')
+	f.write('\n\nPremature Paths: Total {}\n\n'.format(str(len(prematurePaths))))
 
 	for path in prematurePaths:
 		f.write(path['fullString']+'\n')
