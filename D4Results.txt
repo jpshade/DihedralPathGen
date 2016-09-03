@@ -1,0 +1,66 @@
+Results:
+
+(e , e) : 1 steps : e -> e
+(e , r1) : 1 steps : e -> e
+(e , r2) : 1 steps : e -> e
+(e , r3) : 1 steps : e -> e
+(e , s) : 1 steps : e -> e
+(e , r1s) : 1 steps : e -> e
+(e , r2s) : 1 steps : e -> e
+(e , r3s) : 1 steps : e -> e
+(r1 , e) : 2 steps : e -> r1 -> r1
+(r1 , r1) : 4 steps : e -> r1 -> r2 -> r3 -> e
+(r1 , r2) : 3 steps : e -> r1 -> r3 -> e
+(r1 , r3) : 2 steps : e -> r1 -> e
+(r1 , s) : 4 steps : e -> r1 -> r3s -> s -> e
+(r1 , r1s) : 4 steps : e -> r1 -> s -> r1s -> e
+(r1 , r2s) : 4 steps : e -> r1 -> r1s -> r2s -> e
+(r1 , r3s) : 4 steps : e -> r1 -> r2s -> r3s -> e
+(r2 , e) : 2 steps : e -> r2 -> r2
+(r2 , r1) : 4 steps : e -> r2 -> r3 -> r1 -> r2
+(r2 , r2) : 2 steps : e -> r2 -> e
+(r2 , r3) : 4 steps : e -> r2 -> r1 -> r3 -> r2
+(r2 , s) : 4 steps : e -> r2 -> r2s -> s -> e
+(r2 , r1s) : 4 steps : e -> r2 -> r3s -> r1s -> e
+(r2 , r2s) : 4 steps : e -> r2 -> s -> r2s -> e
+(r2 , r3s) : 4 steps : e -> r2 -> r1s -> r3s -> e
+(r3 , e) : 2 steps : e -> r3 -> r3
+(r3 , r1) : 2 steps : e -> r3 -> e
+(r3 , r2) : 3 steps : e -> r3 -> r1 -> e
+(r3 , r3) : 4 steps : e -> r3 -> r2 -> r1 -> e
+(r3 , s) : 4 steps : e -> r3 -> r1s -> s -> e
+(r3 , r1s) : 4 steps : e -> r3 -> r2s -> r1s -> e
+(r3 , r2s) : 4 steps : e -> r3 -> r3s -> r2s -> e
+(r3 , r3s) : 4 steps : e -> r3 -> s -> r3s -> e
+(s , e) : 2 steps : e -> s -> s
+(s , r1) : 4 steps : e -> s -> r1s -> r3 -> e
+(s , r2) : 4 steps : e -> s -> r2s -> r2 -> e
+(s , r3) : 4 steps : e -> s -> r3s -> r1 -> e
+(s , s) : 2 steps : e -> s -> e
+(s , r1s) : 8 steps : e -> s -> r1 -> r3s -> r2 -> r2s -> r3 -> r1s -> e
+(s , r2s) : 4 steps : e -> s -> r2 -> r2s -> e
+(s , r3s) : 8 steps : e -> s -> r3 -> r1s -> r2 -> r2s -> r1 -> r3s -> e
+(r1s , e) : 2 steps : e -> r1s -> r1s
+(r1s , r1) : 4 steps : e -> r1s -> r2s -> r3 -> e
+(r1s , r2) : 4 steps : e -> r1s -> r3s -> r2 -> e
+(r1s , r3) : 4 steps : e -> r1s -> s -> r1 -> e
+(r1s , s) : 8 steps : e -> r1s -> r3 -> r2s -> r2 -> r3s -> r1 -> s -> e
+(r1s , r1s) : 2 steps : e -> r1s -> e
+(r1s , r2s) : 8 steps : e -> r1s -> r1 -> s -> r2 -> r3s -> r3 -> r2s -> e
+(r1s , r3s) : 4 steps : e -> r1s -> r2 -> r3s -> e
+(r2s , e) : 2 steps : e -> r2s -> r2s
+(r2s , r1) : 4 steps : e -> r2s -> r3s -> r3 -> e
+(r2s , r2) : 4 steps : e -> r2s -> s -> r2 -> e
+(r2s , r3) : 4 steps : e -> r2s -> r1s -> r1 -> e
+(r2s , s) : 4 steps : e -> r2s -> r2 -> s -> e
+(r2s , r1s) : 8 steps : e -> r2s -> r3 -> r3s -> r2 -> s -> r1 -> r1s -> e
+(r2s , r2s) : 2 steps : e -> r2s -> e
+(r2s , r3s) : 8 steps : e -> r2s -> r1 -> r1s -> r2 -> s -> r3 -> r3s -> e
+(r3s , e) : 2 steps : e -> r3s -> r3s
+(r3s , r1) : 4 steps : e -> r3s -> s -> r3 -> e
+(r3s , r2) : 4 steps : e -> r3s -> r1s -> r2 -> e
+(r3s , r3) : 4 steps : e -> r3s -> r2s -> r1 -> e
+(r3s , s) : 8 steps : e -> r3s -> r1 -> r2s -> r2 -> r1s -> r3 -> s -> e
+(r3s , r1s) : 4 steps : e -> r3s -> r2 -> r1s -> e
+(r3s , r2s) : 8 steps : e -> r3s -> r3 -> s -> r2 -> r1s -> r1 -> r2s -> e
+(r3s , r3s) : 2 steps : e -> r3s -> e
