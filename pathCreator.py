@@ -1,4 +1,10 @@
+import os
 from groupDictionarySetup import *
+
+if not os.path.exists('D' + str(order)):
+    os.makedirs('D' + str(order))
+
+os.chdir('.\\D' + str(order))
 
 initialize()
 
