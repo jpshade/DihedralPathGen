@@ -83,6 +83,9 @@ def writeResults(order):
 				f.write(generatePath(firstElement,secondElement,order)['fullString'] + '\n')
 
 	with open('D' + str(order) + 'SignificantPaths.txt', 'w') as f:
+		f.write("Complete Paths: {}\nLength Anomalies: {}\nPremature Paths: {}\n\n".format(str(len(completePaths)),
+			str(len(lengthAnomalies)), str(len(prematurePaths))))
+
 		f.write("Complete Paths: Total {}\n\n".format(str(len(completePaths))))
 
 		for path in completePaths:
