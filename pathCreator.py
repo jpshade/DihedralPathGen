@@ -76,11 +76,13 @@ def writeResults(order):
 	initializeGroup(order)
 
 	with open('D' + str(order) + 'Results.txt', 'w') as f:
-		f.write('Results:\n\n')
+		f.write('resultsDict = {\n')
 
 		for firstElement in myGroup:
 			for secondElement in myGroup:
-				f.write(generatePath(firstElement,secondElement,order)['fullString'] + '\n')
+				currentPath = generatePath(firstElement,secondElement,order)
+				f.write('\t' + str(currentPath['elements']) + ': ' + str(currentPath['counter']) + ',\n')
+		f.write('}')
 
 	with open('D' + str(order) + 'SignificantPaths.txt', 'w') as f:
 		f.write("Complete Paths: {}\nLength Anomalies: {}\nPremature Paths: {}\n\n".format(str(len(completePaths)),
