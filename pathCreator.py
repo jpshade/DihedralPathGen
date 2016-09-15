@@ -140,8 +140,6 @@ def initializeGroup(order):
 	if not os.path.exists(myWorkDir):
 	    os.makedirs(myWorkDir)
 
-	print(__file__)
-
 	#initialize(n, myGroup, groupDict)
 	groupDictionarySetup.groupGenerate(n, myGroup)
 
