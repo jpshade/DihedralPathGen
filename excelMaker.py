@@ -1,5 +1,6 @@
-import pathCreator
 import os
+
+import pathCreator
 import pandas as pd
 import openpyxl as op
 
@@ -44,6 +45,7 @@ def makeExcelSheet(myWorkDir, appendedWorkDir, order):
 def colorCells(myWorkDir, order):
 	completeFill = op.styles.PatternFill(start_color='FF77CAE6', end_color='FF77CAE6', fill_type='solid')
 	anomalyFill = op.styles.PatternFill(start_color='FFE69377', end_color='FFE69377', fill_type='solid')
+	diagonalFill = op.styles.PatternFill(start_color = 'FFA1D490', end_color = 'FFA1D490', fill_type = 'solid')
 
 	wb = op.load_workbook('DihedralGroups.xlsx')
 
@@ -52,6 +54,8 @@ def colorCells(myWorkDir, order):
 	for row in ws.rows:
 		for cell in row:
 			if isinstance(cell.value, int):
+				if cell.row == cell.col_idx:
+					cell.fill = diagonalFill
 				if cell.value == order:
 					cell.fill = completeFill
 				if pathCreator.isAnomalous(cell.value, order):
