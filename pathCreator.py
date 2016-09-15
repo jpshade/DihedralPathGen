@@ -10,6 +10,13 @@ completePaths = []
 lengthAnomalies = []
 prematurePaths = []
 
+
+def isPowerOfTwo(num):
+	return bin(num).count('1') == 1
+
+def isAnomalous(pathLength, order):
+	return bool((not isPowerOfTwo(pathLength)) and (order % pathLength)) 
+
 def resetGroup():
 	for elementIndex in range(1,len(myGroup)):
 		myGroup.pop()
@@ -25,9 +32,6 @@ def resetGroup():
 	for elementIndex in range(1,len(prematurePaths)+1):
 		prematurePaths.pop()
 
-
-def isPowerOfTwo(num):
-	return bin(num).count('1') == 1
 
 def generatePath(firstElement, secondElement, order):
 	
@@ -58,15 +62,13 @@ def generatePath(firstElement, secondElement, order):
 	if pathDict['counter'] == order:
 		completePaths.append(pathDict)
 
-	if (not isPowerOfTwo(pathDict['counter']) and (order % pathDict['counter'])):
+	if (isAnomalous(pathDict['counter'], order)):
 		lengthAnomalies.append(pathDict)
 
 	if (firstElement != 'e') and (secondElement != 'e') and (pathDict['pathList'][-1] != 'e'):
 		prematurePaths.append(pathDict)
 
 	return pathDict
-
-
 
 
 
