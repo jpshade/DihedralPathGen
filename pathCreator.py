@@ -74,6 +74,15 @@ def writeResults(order):
 	
 	myWorkDir = initializeGroup(order)
 
+	with open(myWorkDir + 'D' + str(order) + 'Group.txt', 'w') as f:
+		f.write('[')
+		groupStr = ''
+
+		for element in myGroup:
+			groupStr = groupStr + '\'' + element + '\','
+
+		f.write(groupStr[:-1] + ']')
+
 	with open(myWorkDir + 'D' + str(order) + 'ResultsDict.txt', 'w') as f:
 		f.write('{\n')
 
@@ -103,6 +112,8 @@ def writeResults(order):
 
 		for path in prematurePaths:
 			f.write(path['fullString']+'\n')
+
+	return myWorkDir
 
 
 def makeMultiplicationTable(n, myWorkDir):
