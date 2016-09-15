@@ -34,8 +34,6 @@ def sortedDataFrame(myWorkDir, order):
 
 
 
-
-
 def makeExcelSheet(myWorkDir, order):
 	groupFrame = sortedDataFrame(myWorkDir, order)
 	
@@ -48,8 +46,12 @@ def makeExcelSheet(myWorkDir, order):
 	writer.save()
 
 
-if __name__ == '__main__':
-	order = int(input('2n = ? '))
+def mainFunction(order):
 	myWorkDir = pathCreator.writeResults(order)
 	makeExcelSheet(myWorkDir,order)
+
+
+if __name__ == '__main__':
+	order = int(input('2n = ? '))
+	mainFunction(order)
 
