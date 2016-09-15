@@ -1,7 +1,6 @@
 import os
 import groupDictionarySetup
 
-workingDir = os.getcwd()
 
 myGroup = ['e']
 groupDict = {}
@@ -73,9 +72,9 @@ def generatePath(firstElement, secondElement, order):
 
 def writeResults(order):
 	
-	initializeGroup(order)
+	myWorkDir = initializeGroup(order)
 
-	with open('D' + str(order) + 'Results.txt', 'w') as f:
+	with open(myWorkDir + 'D' + str(order) + 'Results.txt', 'w') as f:
 		f.write('resultsDict = {\n')
 
 		for firstElement in myGroup:
@@ -84,7 +83,7 @@ def writeResults(order):
 				f.write('\t' + str(currentPath['elements']) + ': ' + str(currentPath['counter']) + ',\n')
 		f.write('}')
 
-	with open('D' + str(order) + 'SignificantPaths.txt', 'w') as f:
+	with open(myWorkDir + 'D' + str(order) + 'SignificantPaths.txt', 'w') as f:
 		f.write("Complete Paths: {}\nLength Anomalies: {}\nPremature Paths: {}\n\n".format(str(len(completePaths)),
 			str(len(lengthAnomalies)), str(len(prematurePaths))))
 
@@ -104,8 +103,8 @@ def writeResults(order):
 			f.write(path['fullString']+'\n')
 
 
-def makeMultiplicationTable(n):
-	with open('D{}MultiplicationTable.py'.format(str(2*n)), 'w') as f:
+def makeMultiplicationTable(n, myWorkDir):
+	with open( myWorkDir + 'D{}MultiplicationTable.py'.format(str(2*n)), 'w') as f:
 		f.write('D{}: ['.format(str(2*n)))
 		for element in myGroup:
 			f.write(element + ' ')
@@ -121,17 +120,21 @@ def makeMultiplicationTable(n):
 
 def initializeGroup(order):
 	resetGroup()
-	
-	n = int(order/2)
-	if not os.path.exists(workingDir + '\\D' + str(order)):
-	    os.makedirs(workingDir + '\\D' + str(order))
+	dir = os.path.dirname(__file__)
+	myWorkDir = dir + '\\D' + str(order) + '\\'
 
-	os.chdir(workingDir + '\\D' + str(order))
+	n = int(order/2)
+	if not os.path.exists(myWorkDir):
+	    os.makedirs(myWorkDir)
+
+	print(__file__)
 
 	#initialize(n, myGroup, groupDict)
 	groupDictionarySetup.groupGenerate(n, myGroup)
 
-	makeMultiplicationTable(n)
+	makeMultiplicationTable(n, myWorkDir)
+
+	return myWorkDir
 
 if __name__ == "__main__":
 	order = int(input('2n = ? '))
