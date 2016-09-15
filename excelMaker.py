@@ -36,8 +36,13 @@ def sortedDataFrame(myWorkDir, order):
 
 
 def makeExcelSheet(myWorkDir, order):
-	pass
+	writer = pd.ExcelWriter('DihedralGroups.xlsx.', engine='xlsxwriter')
 
+	groupFrame = sortedDataFrame(myWorkDir, order)
+
+	groupFrame.to_excel(writer, sheet_name = 'D{}'.format(order))
+
+	writer.save()
 
 
 
