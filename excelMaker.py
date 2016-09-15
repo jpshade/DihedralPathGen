@@ -1,6 +1,7 @@
 import pathCreator
 import os
 import pandas as pd
+from openpyxl import load_workbook
 
 
 '''
@@ -36,17 +37,19 @@ def sortedDataFrame(myWorkDir, order):
 
 
 def makeExcelSheet(myWorkDir, order):
-	writer = pd.ExcelWriter('DihedralGroups.xlsx.', engine='xlsxwriter')
-
 	groupFrame = sortedDataFrame(myWorkDir, order)
+	
+	book = load_workbook('DihedralGroups.xlsx')
+	writer = pd.ExcelWriter('DihedralGroups.xlsx', engine='openpyxl') 
+	writer.book = book
+	writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
 
-	groupFrame.to_excel(writer, sheet_name = 'D{}'.format(order))
-
+	groupFrame.to_excel(writer, "D{}".format(order))
 	writer.save()
-
 
 
 if __name__ == '__main__':
 	order = int(input('2n = ? '))
-	myWorkDir = writeResults(order)
+	myWorkDir = pathCreator.writeResults(order)
+	makeExcelSheet(myWorkDir,order)
 
