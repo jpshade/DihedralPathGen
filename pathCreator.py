@@ -74,13 +74,15 @@ def writeResults(order):
 	
 	myWorkDir = initializeGroup(order)
 
-	with open(myWorkDir + 'D' + str(order) + 'Results.txt', 'w') as f:
-		f.write('resultsDict = {\n')
+	with open(myWorkDir + 'D' + str(order) + 'ResultsDict.txt', 'w') as f:
+		f.write('{\n')
 
 		for firstElement in myGroup:
+			f.write('\t\'' + firstElement + '\' : {')
 			for secondElement in myGroup:
 				currentPath = generatePath(firstElement,secondElement,order)
-				f.write('\t' + str(currentPath['elements']) + ': ' + str(currentPath['counter']) + ',\n')
+				f.write('\'' + secondElement + '\' : ' + str(currentPath['counter']) + ', ')
+			f.write('},\n')
 		f.write('}')
 
 	with open(myWorkDir + 'D' + str(order) + 'SignificantPaths.txt', 'w') as f:
